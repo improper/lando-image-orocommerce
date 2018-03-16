@@ -2,6 +2,10 @@ FROM devwithlando/php:7.1-fpm
 
 RUN apt-get -yqq update
 
+#########
+# OroCommerce prefers that node or another JS Engine be made available to it
+RUN apt install -yq nodejs
+
 ##########
 # PHP-INTL - OroCommerce Dependencies
 # Lando ships with INTL but we need a more recent version
