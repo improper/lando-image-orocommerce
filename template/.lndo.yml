@@ -1,4 +1,7 @@
-# We should align this with LANDO_APP_NAME in our .env
+####
+# This config references variables defined in .env, provided in this repo.
+# Lando will parse the .env file when Lando is launched.
+
 name: oro-test
 
 proxy:
