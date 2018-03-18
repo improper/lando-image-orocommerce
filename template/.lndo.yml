@@ -1,0 +1,91 @@
+# We should align this with LANDO_APP_NAME in our .env
+name: oro-test
+
+proxy:
+  nginx:
+    - oro.lndo.site
+  mailhog:
+    - mail.lemp.lndo.site
+
+services:
+  appserver:
+    type: php:7.1
+    overrides:
+      services:
+        image: improper/lando-orocommerce-php:7.1-fpm
+#        build:
+#          context: ${PWD}/dev/lando/dockerfiles/appserver
+    via: nginx
+    ssl: true
+    webroot: web
+    xdebug: false
+
+    config:
+      server: dev/lando/config/nginx/default.conf
+      conf: dev/lando/config/php/php.ini
+
+    build:
+      - "cd $LANDO_MOUNT && composer install || true"
+#    extras:
+#      - "apt-get -yqq update"
+#      - "bash ${LANDO_MOUNT}/dev/lando/config/appserver/setup.sh"
+
+  # Add database
+  oro-db:
+    type: mysql:5.6
+    portforward: false
+
+    creds:
+      user: ${SYMFONY__ORO__DB__USER}
+      password: ${SYMFONY__ORO__DB__PASS}
+      database: ${SYMFONY__ORO__DB__NAME}
+
+  redis-cache:
+    type: redis
+    portforward: false
+
+  redis-session:
+    type: redis
+    portforward: false
+
+  node:
+    type: node:6.10
+
+  mailhog:
+    type: mailhog
+    hogfrom:
+      - appserver
+    portforward: false
+
+# Add some nice command routing
+tooling:
+  phplint:
+    service: appserver
+  composer:
+    service: appserver
+    description: Run composer commands
+    cmd:
+      - php
+      - -d memory_limit=-1
+      - /usr/local/bin/composer
+      - -v
+      - --ansi
+  php:
+    service: appserver
+
+  mysql:
+    user: root
+    service: oro-db
+    description: Drop into a MySQL shell
+
+  npm:
+    service: node
+
+  node:
+    service: node
+
+  console:
+    service: appserver
+    description: Run Symfony Console command
+    cmd:
+      - ./app/console
