@@ -1,0 +1,13 @@
+security:
+    encoders:
+        Symfony\Component\Security\Core\User\User: plaintext
+    firewalls:
+        wsse_secured:
+            wsse:
+                nonce_cache_service_id: oro.cache.wsse_nonces
+services:
+    oro.cache.wsse_nonces:
+        public: false
+        parent: oro.cache.abstract
+        calls:
+            - [ setNamespace, [ "oro_nonces_cache" ] ]

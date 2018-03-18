@@ -1,0 +1,33 @@
+# This file is auto-generated during the composer install
+parameters:
+    database_driver: pdo_mysql
+    database_host: '%oro.db.host%'
+    database_port: null
+    database_name: '%oro.db.name%'
+    database_user: '%oro.db.user%'
+    database_password: '%oro.db.pass%'
+    mailer_transport: smtp
+    mailer_host: mailhog
+    mailer_port: 1025
+    mailer_encryption: null
+    mailer_user: null
+    mailer_password: null
+    websocket_bind_address: 0.0.0.0
+    websocket_bind_port: 8080
+    websocket_frontend_host: '*'
+    websocket_frontend_port: 8080
+    websocket_frontend_path: null
+    websocket_backend_host: '*'
+    websocket_backend_port: 8080
+    websocket_backend_path: null
+    web_backend_prefix: /admin
+    session_handler: snc_redis.session.handler
+#    session_handler: session.handler.pdo
+    locale: en
+    secret: 6f4f3a80c131e43451222ab72b089ede
+    installed: null
+    assets_version: 5e81736f
+    assets_version_strategy: time_hash
+    message_queue_transport: dbal
+    message_queue_transport_config: null
+    enable_price_sharding: false
