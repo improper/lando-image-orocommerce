@@ -13,8 +13,6 @@ services:
     overrides:
       services:
         image: improper/lando-orocommerce-php:7.1-fpm
-#        build:
-#          context: ${PWD}/dev/lando/dockerfiles/appserver
     via: nginx
     ssl: true
     webroot: web
@@ -26,9 +24,6 @@ services:
 
     build:
       - "cd $LANDO_MOUNT && composer install || true"
-#    extras:
-#      - "apt-get -yqq update"
-#      - "bash ${LANDO_MOUNT}/dev/lando/config/appserver/setup.sh"
 
   # Add database
   oro-db:
